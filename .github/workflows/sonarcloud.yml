@@ -18,7 +18,7 @@ jobs:
       - name: Configurar Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.20' # ou a versão do seu projeto
+          go-version: '1.21' # ou a versão do seu projeto
 
       - name: Rodar testes e gerar cobertura
         run: go test -coverprofile=coverage.out ./...
