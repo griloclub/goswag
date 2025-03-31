@@ -1,0 +1,31 @@
+name: SonarCloud
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    name: Testes e análise no SonarCloud
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v3
+
+      - name: Configurar Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20' # ou a versão do seu projeto
+
+      - name: Rodar testes e gerar cobertura
+        run: go test -coverprofile=coverage.out ./...
+
+      - name: Rodar análise no SonarCloud
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          projectBaseDir: .
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
